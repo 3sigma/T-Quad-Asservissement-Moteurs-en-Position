@@ -1,0 +1,448 @@
+{
+	"version": "0.7.2",
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"title": "Consignes moteurs",
+			"width": 1,
+			"row": {
+				"3": 1,
+				"4": 1,
+				"5": 9
+			},
+			"col": {
+				"3": 1,
+				"4": 2,
+				"5": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "switchbutton",
+					"settings": {
+						"title": "Type de signal (carré ou sinus)",
+						"variable": "datasources[\"ws\"][\"typeSignal\"]",
+						"yestext": "Sinus",
+						"notext": "Carré",
+						"initialstate": false
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Offset (rad)",
+						"variable": "datasources[\"ws\"][\"offset\"]",
+						"formula": "x",
+						"initialvalue": 0,
+						"min": -20,
+						"max": 20,
+						"resolution": 1,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Amplitude (rad)",
+						"variable": "datasources[\"ws\"][\"amplitude\"]",
+						"formula": "x",
+						"initialvalue": 0,
+						"min": 0,
+						"max": 20,
+						"resolution": 1,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Fréquence (Hz)",
+						"variable": "datasources[\"ws\"][\"frequence\"]",
+						"formula": "x",
+						"initialvalue": 0,
+						"min": 0,
+						"max": 1,
+						"resolution": 2,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				}
+			]
+		},
+		{
+			"title": "Démarrage",
+			"width": 1,
+			"row": {
+				"3": 1,
+				"4": 1,
+				"5": 9
+			},
+			"col": {
+				"3": 2,
+				"4": 1,
+				"5": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "sshcommand",
+					"settings": {
+						"title": "Marche / Arrêt de l'application",
+						"style": "switch",
+						"host": "192.168.0.199",
+						"login": "root",
+						"password": "tquad",
+						"oncommand": "/root/programmes_python/startAsservissementPosition.sh",
+						"offcommand": "/root/programmes_python/stopPython.sh",
+						"ontext": "ON",
+						"offtext": "OFF",
+						"initialstate": false,
+						"caption": "Exécuter"
+					}
+				}
+			]
+		},
+		{
+			"title": "Position (rad) et tension (V)",
+			"width": 1,
+			"row": {
+				"3": 5,
+				"4": 1
+			},
+			"col": {
+				"3": 2,
+				"4": 4
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "plot",
+					"settings": {
+						"title": "Avant droit",
+						"xaxis": "datasource_column",
+						"time": "datasources[\"ws\"][\"Temps\"]",
+						"legendX": "Temps (s)",
+						"time_window": "10",
+						"value": [
+							"datasources[\"ws\"][\"thetaRefAvantDroit\"]",
+							"datasources[\"ws\"][\"thetaAvantDroit\"]"
+						],
+						"y_axis_min_range": "-1,1",
+						"offset_y": "0",
+						"y2value": [
+							"datasources[\"ws\"][\"commandeAvantDroit\"]"
+						],
+						"y2_axis_min_range": "-1,1",
+						"offset_y2": "0",
+						"include_legend": true,
+						"legendStr": "thetaref,theta,u",
+						"height": 4,
+						"pausable": true,
+						"refreshperiod": 50
+					}
+				},
+				{
+					"type": "plot",
+					"settings": {
+						"title": "Arrière droit",
+						"xaxis": "datasource_column",
+						"time": "datasources[\"ws\"][\"Temps\"]",
+						"legendX": "Temps (s)",
+						"time_window": "10",
+						"value": [
+							"datasources[\"ws\"][\"thetaRefArriereDroit\"]",
+							"datasources[\"ws\"][\"thetaArriereDroit\"]"
+						],
+						"y_axis_min_range": "-1,1",
+						"offset_y": "0",
+						"y2value": [
+							"datasources[\"ws\"][\"commandeArriereDroit\"]"
+						],
+						"y2_axis_min_range": "-1,1",
+						"offset_y2": "0",
+						"include_legend": true,
+						"legendStr": "thetaref,theta,u",
+						"height": 4,
+						"pausable": true,
+						"refreshperiod": 50
+					}
+				}
+			]
+		},
+		{
+			"title": "Position (rad) et tension (V)",
+			"width": 1,
+			"row": {
+				"2": 9,
+				"3": 7,
+				"4": 1,
+				"5": 7
+			},
+			"col": {
+				"2": 2,
+				"3": 3,
+				"4": 3,
+				"5": 3
+			},
+			"col_width": "1",
+			"widgets": [
+				{
+					"type": "plot",
+					"settings": {
+						"title": "Avant gauche",
+						"xaxis": "datasource_column",
+						"time": "datasources[\"ws\"][\"Temps\"]",
+						"legendX": "Temps (s)",
+						"time_window": "10",
+						"value": [
+							"datasources[\"ws\"][\"thetaRefAvantGauche\"]",
+							"datasources[\"ws\"][\"thetaAvantGauche\"]"
+						],
+						"y_axis_min_range": "-1,1",
+						"offset_y": "0",
+						"y2value": [
+							"datasources[\"ws\"][\"commandeAvantGauche\"]"
+						],
+						"y2_axis_min_range": "-1,1",
+						"offset_y2": "0",
+						"include_legend": true,
+						"legendStr": "thetaref,theta,u",
+						"height": 4,
+						"pausable": true,
+						"refreshperiod": 50
+					}
+				},
+				{
+					"type": "plot",
+					"settings": {
+						"title": "Arrière gauche",
+						"xaxis": "datasource_column",
+						"time": "datasources[\"ws\"][\"Temps\"]",
+						"legendX": "Temps (s)",
+						"time_window": "10",
+						"value": [
+							"datasources[\"ws\"][\"thetaRefArriereGauche\"]",
+							"datasources[\"ws\"][\"thetaArriereGauche\"]"
+						],
+						"y_axis_min_range": "-1,1",
+						"offset_y": "0",
+						"y2value": [
+							"datasources[\"ws\"][\"commandeArriereGauche\"]"
+						],
+						"y2_axis_min_range": "-1,1",
+						"offset_y2": "0",
+						"include_legend": true,
+						"legendStr": "thetaref,theta,u",
+						"height": 4,
+						"pausable": true,
+						"refreshperiod": 50
+					}
+				}
+			]
+		},
+		{
+			"title": "Pilotage des moteurs",
+			"width": 1,
+			"row": {
+				"3": 32,
+				"4": 5
+			},
+			"col": {
+				"3": 3,
+				"4": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Moteur arrière droit",
+						"variable": "datasources[\"ws\"][\"moteur1\"]",
+						"initialvalue": 0,
+						"min": -1,
+						"max": 1,
+						"resolution": 2,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Moteur arrière gauche",
+						"variable": "datasources[\"ws\"][\"moteur2\"]",
+						"initialvalue": 0,
+						"min": -1,
+						"max": 1,
+						"resolution": 2,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Moteur avant droit",
+						"variable": "datasources[\"ws\"][\"moteur3\"]",
+						"initialvalue": 0,
+						"min": -1,
+						"max": 1,
+						"resolution": 2,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Moteur avant gauche",
+						"variable": "datasources[\"ws\"][\"moteur4\"]",
+						"initialvalue": 0,
+						"min": -1,
+						"max": 1,
+						"resolution": 2,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				}
+			]
+		},
+		{
+			"title": "Positions moteurs (rad)",
+			"width": 1,
+			"row": {
+				"3": 1,
+				"4": 19
+			},
+			"col": {
+				"3": 3,
+				"4": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "textdouble_widget",
+					"settings": {
+						"title1": "Avant gauche",
+						"title2": "Avant droit",
+						"value1": "datasources[\"ws\"][\"thetaAvantGauche\"]",
+						"value2": "datasources[\"ws\"][\"thetaAvantDroit\"]",
+						"units1": "rad",
+						"units2": "rad"
+					}
+				},
+				{
+					"type": "textdouble_widget",
+					"settings": {
+						"title1": "Arrière gauche",
+						"title2": "Arrière droit",
+						"value1": "datasources[\"ws\"][\"thetaArriereGauche\"]",
+						"value2": "datasources[\"ws\"][\"thetaArriereDroit\"]",
+						"units1": "rad",
+						"units2": "rad"
+					}
+				}
+			]
+		},
+		{
+			"title": "Gains du PID",
+			"width": 1,
+			"row": {
+				"3": 14,
+				"4": 17,
+				"5": 17
+			},
+			"col": {
+				"3": 1,
+				"4": 2,
+				"5": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Kp",
+						"variable": "datasources[\"ws\"][\"Kp\"]",
+						"formula": "x",
+						"initialvalue": 2,
+						"min": 0,
+						"max": 5,
+						"resolution": 1,
+						"resetvalue": 2,
+						"resetcaption": "Réinitialisation"
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Ki",
+						"variable": "datasources[\"ws\"][\"Ki\"]",
+						"formula": "x",
+						"initialvalue": 0,
+						"min": 0,
+						"max": 10,
+						"resolution": 2,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				},
+				{
+					"type": "slider",
+					"settings": {
+						"title": "Kd",
+						"variable": "datasources[\"ws\"][\"Kd\"]",
+						"initialvalue": 0,
+						"min": 0,
+						"max": 0.5,
+						"resolution": 2,
+						"resetvalue": 0,
+						"resetcaption": "Réinitialisation"
+					}
+				}
+			]
+		},
+		{
+			"title": "Moniteur",
+			"width": 1,
+			"row": {
+				"3": 46,
+				"4": 19,
+				"5": 23
+			},
+			"col": {
+				"3": 2,
+				"4": 4,
+				"5": 1
+			},
+			"col_width": "1",
+			"widgets": [
+				{
+					"type": "textarea",
+					"settings": {
+						"nblines_window": "10",
+						"value": [
+							"datasources[\"ws\"][\"Raw\"]"
+						]
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "ws",
+			"type": "websocket",
+			"settings": {
+				"host": "ws://192.168.0.199:9090/ws",
+				"variables_to_send": "typeSignal,offset,amplitude,frequence,Kp,Ki,Kd,moteur1,moteur2,moteur3,moteur4",
+				"refresh_rate": "500",
+				"checksum": "sum"
+			}
+		}
+	],
+	"columns": 4
+}
